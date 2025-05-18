@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>April 2025</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      padding: 30px;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    .image {
+      flex: 0 0 300px;
+      margin-right: 30px;
+    }
+    .text {
+      max-width: 700px;
+    }
+    img {
+      width: 100%;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="image">
+    <img src="../apr-2025-thumb.png" alt="View of Bangkok">
+  </div>
+  <div class="text">
+    <h1>April 2025</h1>
+    <p>I have a beautiful view of Bangkok. I have a pool, gym and this weekend is Songkran, Thai new years. Everyone showers each other with water to signify cleaning bad luck away. I can’t because I have an eye infection and water would make it worse. I’ve been in my room for several days because I don’t want to infect others. Got on Discord to speak to folks a bit which was nice. Got off a 3 hour call with Sharon talking about deep things.</p>
+
+    <p>Topic: being present, forgiving yourself, and loving yourself. I don’t do or am any of those. I’m not at peace. I’m doing my best, as much as I can when I can. But I’m not at peace. I don’t feel safe yet and I don’t know when I’ll feel that again apart from Auntie’s house, Steph’s, Maggie’s or Bunso/Mush’s. It’s like the location and people make me feel safe. Here I don’t have any of that yet and I am lacking the bandwidth or in this case physical capacity to build it still. And since I don’t have it, food has been my comfort which goes against my fitness and wellness goal.</p>
+
+    <p>So here I am. Sitting with the discomfort and seeing what is in my power to change. I will be the victor, not the victim. I will thrive. I will thrive.</p>
+  </div>
+</body>
+</html>
