@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,97 +6,107 @@
   <title>🧠 37 Minutes - Blog</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
       font-family: Arial, sans-serif;
       background-color: #000;
       color: #e0e0e0;
+      display: flex;
+    }
+
+    main {
+      flex: 3;
       padding: 40px;
-      max-width: 700px;
-      margin: auto;
     }
 
-    h1 {
-      font-size: 2em;
-      margin-bottom: 0.2em;
+    aside {
+      flex: 1;
+      padding: 40px;
+      border-left: 1px solid #333;
+      background-color: #111;
+      max-width: 300px;
+    }
+
+    h1, h2 {
       color: #00ff88;
-    }
-
-    p {
-      margin-bottom: 2em;
-      font-size: 1.1em;
     }
 
     a {
-      display: block;
-      text-decoration: none;
-      background: #111;
-      padding: 12px 20px;
-      margin-bottom: 12px;
-      border-radius: 8px;
-      font-size: 1.1em;
       color: #00ff88;
-      border: 1px solid #00ff88;
-      transition: 0.3s ease;
+      text-decoration: none;
+      display: block;
+      margin: 10px 0;
     }
 
     a:hover {
-      background: #00ff88;
-      color: #000;
+      text-decoration: underline;
     }
 
-    .form-label {
-      color: #e0e0e0;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    input[type="email"] {
+    iframe {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0 20px 0;
-      border-radius: 5px;
+      height: 80vh;
       border: none;
-      font-size: 1em;
-    }
-
-    input[type="submit"] {
-      background-color: #00ff88;
-      color: #000;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    input[type="submit"]:hover {
-      background-color: #00cc6a;
-    }
-
-    .footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: #888;
+      background-color: white;
     }
   </style>
 </head>
 <body>
-  <h1>🧠 37 Minutes Blog</h1>
-  <p>Welcome to my personal blog. Each month, I document a piece of my journey. Click below to view each entry (password required):</p>
+  <main>
+    <h1>🧠 37 Minutes</h1>
+    <div id="latest-post">
+      <iframe id="post-frame" src=""></iframe>
+    </div>
+  </main>
 
-  <a href="apr-2025/">📅 April 2025 – Bangkok & Songkran Reflections</a>
-  <a href="may-2025/">📅 May 2025 – Sauna Strength & Getting Fired</a>
-  <a href="jan-2025/">📅 January 2025 – (Placeholder)</a>
+  <aside>
+    <h2>📅 Recent Posts</h2>
+    <div id="recent-posts"></div>
+    <h2>🗂 All Archives</h2>
+    <div id="all-posts"></div>
+  </aside>
 
-  <hr style="margin: 40px 0; border: none; border-top: 1px solid #333;" />
+  <script>
+    async function fetchFolders() {
+      const res = await fetch('./');
+      const text = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(text, 'text/html');
+      const links = Array.from(doc.querySelectorAll('a'))
+        .map(a => a.getAttribute('href'))
+        .filter(href => href.endsWith('/') && /^\d{4}-\d{2}\/$/.test(href))
+        .map(href => href.replace('/', ''))
+        .sort().reverse();
 
-  <form action="https://buttondown.email/api/emails/embed-subscribe/malala" method="post" target="popupwindow" onsubmit="window.open('https://buttondown.email/malala', 'popupwindow')">
-    <label for="bd-email" class="form-label">📬 Want updates when I post?</label>
-    <input type="email" name="email" id="bd-email" placeholder="Enter your email" required />
-    <input type="submit" value="Subscribe" />
-  </form>
+      return links;
+    }
 
-  <p class="footer">
-    Built with ❤️ using GitHub Pages + Buttondown
-  </p>
+    function buildLinks(folders) {
+      const recent = folders.slice(0, 5);
+      const all = folders;
+
+      const recentDiv = document.getElementById('recent-posts');
+      recent.forEach(f => {
+        const a = document.createElement('a');
+        a.href = `./${f}/`;
+        a.textContent = f;
+        recentDiv.appendChild(a);
+      });
+
+      const allDiv = document.getElementById('all-posts');
+      all.forEach(f => {
+        const a = document.createElement('a');
+        a.href = `./${f}/`;
+        a.textContent = f;
+        allDiv.appendChild(a);
+      });
+
+      // Load latest into iframe
+      if (folders.length > 0) {
+        document.getElementById('post-frame').src = `./${folders[0]}/`;
+      }
+    }
+
+    fetchFolders().then(buildLinks);
+  </script>
 </body>
 </html>
